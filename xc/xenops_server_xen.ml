@@ -2647,6 +2647,8 @@ module VIF = struct
 					let (d: Device_common.device) = device_by_id xc xs vm Device_common.Vif Newest (id_of vif) in
 					let path = Device_common.kthread_pid_path_of_device ~xs d in
 					let kthread_pid = try xs.Xs.read path |> int_of_string with _ -> 0 in
+					let pra_path = Device_common.vif_pvs_rules_active_path_of_device ~xs d in
+					let pvs_rules_active = try (ignore (xs.Xs.read pra_path); true) with _ -> false in
 					(* We say the device is present unless it has been deleted
 					   from xenstore. The corrolary is that: only when the device
 					   is finally deleted from xenstore, can we remove bridges or
@@ -2655,6 +2657,7 @@ module VIF = struct
 						Vif.active = true;
 						plugged = true;
 						media_present = true;
+						pvs_rules_active = pvs_rules_active;
 						kthread_pid = kthread_pid
 					}
 				with

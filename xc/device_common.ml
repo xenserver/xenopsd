@@ -101,6 +101,11 @@ let disconnect_path_of_device ~xs (x: device) =
 let kthread_pid_path_of_device ~xs (x: device) =
 	sprintf "%s/kthread-pid" (backend_path_of_device ~xs x)
 
+(** Only useful for a VIF device, this is where the "setup-pvs-proxy-rules"
+  * script indicates whether the OVS rules are set up. *)
+let vif_pvs_rules_active_path_of_device ~xs (x: device) =
+	sprintf "%s/pvs-rules-active" (backend_path_of_device ~xs x)
+
 (** Location of the backend error path *)
 let backend_error_path_of_device ~xs (x : device) =
   sprintf "%s/error/backend/%s/%d"
