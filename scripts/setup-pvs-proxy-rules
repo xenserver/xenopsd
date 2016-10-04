@@ -129,7 +129,7 @@ case $ACTION in
                         # Packets from proxy->client.
                         $OFCTL --strict add-flow "$PVS_BRIDGE" priority=$((PVS_RULE_PRIO)),udp,dl_src="$PVS_PROXY_MAC",dl_dst="$PVS_VM_MAC",nw_src="$PVS_SERVER_IP",tp_dst=$i,actions=NORMAL
                         # Packets from server->client that need to be proxied.
-                        $OFCTL --strict add-flow "$PVS_BRIDGE" priority=$((PVS_RULE_PRIO-1)),udp,dl_dst="$PVS_VM_MAC",nw_src="$PVS_SERVER_IP",tp_dst=$i,actions="$PVS_PROXY_OFPORT"
+                        $OFCTL --strict add-flow "$PVS_BRIDGE" priority=$((PVS_RULE_PRIO-1)),udp,dl_dst="$PVS_VM_MAC",nw_src="$PVS_SERVER_IP",tp_dst=$i,actions="$PVS_PROXY_OFPORT",NORMAL
                     done
                 fi
             done
